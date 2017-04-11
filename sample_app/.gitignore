@@ -19,3 +19,7 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore config db file
+/config/database.example.yml
+/config/secrets.yml
