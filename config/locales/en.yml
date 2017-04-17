@@ -51,3 +51,7 @@ en:
   sign_up_now : "Sign up now!"
   sign_up : "Sign Up"
   sign_up_content : "This will be a signup page for new users."
+  sign_up_btn : "Create my Account"
+  form_contain: "The form contain"
+  error : " error"
+  user_not_found : "User not found"
