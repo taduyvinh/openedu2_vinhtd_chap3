@@ -26,6 +26,10 @@ class User < ApplicationRecord
     BCrypt::Password.new(remember_digest).is_password? remember_token
   end
 
+  def current_user? user
+    self == user
+  end
+
   class << self
     def new_token
       SecureRandom.urlsafe_base64
