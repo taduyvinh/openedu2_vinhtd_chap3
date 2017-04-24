@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
 
   def index
-    @users = User.paginate page: params[:page]
+    @users = User.activated.paginate page: params[:page]
   end
 
   def new
@@ -13,14 +13,18 @@ class UsersController < ApplicationController
   end
 
   def show
+    unless @user.activated
+      flash[:error] = t "account_not_activated"
+      redirect_to root_path
+    end
   end
 
   def create
     @user = User.new user_params
     if @user.save
-      log_in @user
-      flash[:success] = t "welcome"
-      redirect_to @user
+      @user.send_activation_email
+      flash[:info] = t "check_email"
+      redirect_to root_path
     else
       render :new
     end
@@ -47,7 +51,7 @@ class UsersController < ApplicationController
   def logged_in_user
     unless logged_in?
       store_location
-      flash[:danger] = t "pls_log_in"
+      flash[:error] = t "pls_log_in"
       redirect_to login_path
     end
   end
