@@ -8,6 +8,7 @@ class Micropost < ApplicationRecord
   mount_uploader :picture, PictureUploader
 
   scope :ordered, ->{order created_at: :desc}
+  scope :posts_feed, ->user{where user_id: user.following_ids << user.id}
 
   private
   def picture_size
