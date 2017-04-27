@@ -1,7 +1,9 @@
 class User < ApplicationRecord
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
   attr_accessor :remember_token, :activation_token, :reset_token
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  has_many :microposts, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 50}
   validates :email, presence: true, length: {maximum: 50},
@@ -14,6 +16,10 @@ class User < ApplicationRecord
   before_create :create_activation_digest
 
   scope :activated, ->{where activated: true}
+
+  def feed
+    microposts.ordered
+  end
 
   def create_password_digest
     self.reset_token = User.new_token

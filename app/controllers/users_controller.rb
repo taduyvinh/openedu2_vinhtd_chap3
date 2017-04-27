@@ -28,6 +28,7 @@ class UsersController < ApplicationController
       flash[:error] = t "account_not_activated"
       redirect_to root_path
     end
+    @microposts = @user.microposts.ordered.paginate page: params[:page]
   end
 
   def edit
@@ -46,14 +47,6 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:success] = t "deleted_user"
     redirect_to users_path
-  end
-
-  def logged_in_user
-    unless logged_in?
-      store_location
-      flash[:error] = t "pls_log_in"
-      redirect_to login_path
-    end
   end
 
   def correct_user
