@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :index]
+  before_action :logged_in_user, except: [:new, :create, :show]
   before_action :admin_user, only: :destroy
   before_action :find_user, except: [:new, :create, :index]
   before_action :correct_user, only: [:edit, :update]
@@ -29,6 +29,9 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
     @microposts = @user.microposts.ordered.paginate page: params[:page]
+    @follow = current_user.active_relationships.build
+    @unfollow = current_user.active_relationships.find_by(
+      followed_id: @user.id)
   end
 
   def edit
