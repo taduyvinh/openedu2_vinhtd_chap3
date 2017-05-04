@@ -1,0 +1,15 @@
+<%= provide :title, t("about") %>
+<h1><%= t "about" %></h1>
+<p>
+  <%= t "the" %>
+  <%= link_to "http://www.railstutorial.org/" do %>
+    <em><%= t "ror_tut" %></em>
+  <% end %>
+  <%= t "is_a" %>
+  <%= link_to t("book"), "http://www.railstutorial.org/book" %>
+  <%= t "and" %>
+  <%= link_to t("scr_sr"), "http://screencasts.railstutorial.org/" %>
+  <%= t "teach_webdev" %>
+  <%= link_to t("ror"), "http://rubyonrails.org/" %>
+  <%= t "this_sample" %>
+</p>
